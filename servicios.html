@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huallanca - Lugares Turísticos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="index.html">
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #0d47a1; /* Dark blue */
+            color: white;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 60px; /* Adjust as needed */
+            width: auto;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li {
+            position: relative;
+        }
+
+        .main-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #1976d2; /* Lighter blue on hover */
+            border-radius: 5px;
+        }
+
+        .main-nav .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #1976d2; /* Lighter blue for submenu */
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .main-nav .submenu li a {
+            padding: 10px 20px;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .main-nav .submenu li a:hover {
+            background-color: #42a5f5; /* Even lighter blue on submenu hover */
+        }
+
+        .main-nav .has-submenu:hover .submenu {
+            display: block;
+        }
+
+        .fa-caret-down {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .main-nav .has-submenu:hover .fa-caret-down {
+            transform: rotate(180deg);
+        }
+
+        /* Main Content Styling */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        section h2 {
+            color: #0d47a1;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        section ul li {
+            background-color: #e3f2fd;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 5px solid #1976d2;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1em;
+            color: #444;
+        }
+
+        section ul li strong {
+            color: #0d47a1;
+        }
+
+        .section-content {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 20px;
+            align-items: flex-start; /* Align items to the top */
+        }
+
+        .section-text {
+            flex: 2; /* Takes more space for text */
+            min-width: 300px; /* Ensures text has enough space before wrapping */
+        }
+
+        .section-image {
+            flex: 1; /* Takes less space for image */
+            min-width: 250px; /* Ensures image has a minimum width */
+            text-align: center;
+        }
+
+        .section-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            aspect-ratio: 16/9; /* Maintain aspect ratio */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #0d47a1;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            position: relative; /* Needed for curly brace positioning */
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: flex-start; /* Align items to the top */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: left;
+        }
+
+        .footer-left {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px;
+        }
+
+        .footer-left p {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .footer-right {
+            flex: 2;
+            min-width: 300px;
+            padding: 10px;
+            position: relative;
+            background-color: #1976d2; /* Lighter background for contact info */
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px; /* Space from left content if wrapped */
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 15px 0;
+        }
+
+        .contact-info ul li {
+            margin-bottom: 5px;
+        }
+
+        .contact-info ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-info ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #42a5f5; /* Lighter blue on hover */
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            background-color: #e3f2fd; /* Light blue input background */
+            color: #333;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .contact-form button {
+            background-color: #0d47a1; /* Dark blue button */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #1976d2; /* Lighter blue on button hover */
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #bbdefb;
+            text-align: center;
+        }
+
+        /* Curly Brace Effect (Complex, might need adjustment) */
+        .curly-brace {
+            position: absolute;
+            left: -20px; /* Adjust based on design */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px; /* Size of the curly brace */
+            height: 100%;
+            overflow: hidden; /* Hide parts that go outside */
+            display: none; /* Hide by default, show on larger screens if desired */
+        }
+
+        /* Basic Responsive Adjustments */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+            }
+
+            .main-nav .submenu {
+                position: static; /* Make submenu flow naturally */
+                box-shadow: none;
+                background-color: #1976d2;
+                width: 100%;
+                text-align: center;
+                border-radius: 0;
+                max-height: 0; /* For animated collapse */
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            .main-nav .submenu.active-submenu {
+                max-height: fit-content; /* Adjust based on content */
+            }
+
+            .main-nav .has-submenu:hover .submenu {
+                display: none; /* Disable hover effect for mobile */
+            }
+
+            .main-nav .has-submenu > a .fa-caret-down {
+                transform: rotate(0deg); /* Reset caret for mobile */
+            }
+
+            .main-nav .has-submenu.active .fa-caret-down {
+                transform: rotate(180deg);
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-left, .footer-right {
+                width: 90%;
+                margin-top: 20px;
+            }
+
+            .curly-brace {
+                display: none;
+            }
+
+            .section-content {
+                flex-direction: column;
+            }
+
+            .section-text, .section-image {
+                min-width: unset;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="img/loghua.png" alt="Logo de Huallanca">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#">INICIO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="index.html">Página Principal</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="Historia y Cultura.html">HISTORIA Y CULTURA</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">TURISMO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="circuitos arqueologicos.html">Circuitos Arqueológicos</a></li>
+                            <li><a href="circuitos urbanos.html">Circuitos Urbanos</a></li>
+                            <li><a href="hospedaje.html">Hospedajes</a></li>
+                            <li><a href="gastronimia.html">Gastronomía</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">FESTIVIDADES <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="fiestas patronales.html">Fiestas Patronales</a></li>
+                            <li><a href="eventos culturales.html">Eventos Culturales</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="servicios.html">SERVICIOS <i class=""></i></a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contactos.html">CONTACTO</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Restaurantes y Gastronomía</h2>
+            <div class="section-content">
+                <div class="section-text">
+                    <p>En Huallanca, la gastronomía es una deliciosa aventura con **más de 20 establecimientos** que van desde acogedores restaurantes hasta pequeños locales con encanto. No puedes dejar de probar nuestros **platos típicos**: la reconfortante Chicha en caldo, la ancestral Pachamanca, la cremosa sopa de queso, y la tradicional cachipa. Para los amantes del dulce, el dulce de papas y queso es una delicia única.</p>
+                    <p>Acompaña tus comidas con nuestras **bebidas tradicionales**: la refrescante chicha de jora, la nutritiva chicha de maní, o el singular shinguirito. Y si visitas durante las festividades taurinas, deléitate con los **helados caseros de leche y nieve natural**, una experiencia refrescante y auténtica.</p>
+                </div>
+                <div class="section-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLkC2hIMA84aCp9x2_mkSR2rHDub4kmo2cdkBaYOfx0T0slY8sKJSIJ_N3DgtNHDrJn3c&usqp=CAU" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Atractivos Turísticos</h2>
+            <div class="section-content">
+                <div class="section-image">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj42kasBbyafFsA6tKFR3h9Zqt7CjtK4hAFh0ZSbSVHOjnk1y8zWKImiLxMllN9TAe9OY80U1326tEmv8Z9OkGEct6wqVkNJwLPmcmqtHbTufK6bldpEuoJQuzMrOqL6QtTk5J3frRiFKz4/s1280/Sheglla++buena.jpg" alt="Imagen de Ruinas Arqueológicas">
+                </div>
+                <div class="section-text">
+                    <p>Huallanca es un tesoro para los amantes de la historia y la naturaleza. Explora las enigmáticas "ruinas arqueológicas de Sagrapetaca y Contadera en Shipán", que susurran historias de civilizaciones antiguas. Sumérgete en la belleza natural de la región visitando los **baños termales de Azulmina**, perfectos para la relajación, o admira la majestuosidad de **cascadas como Gaganani** y la serenidad de los **bosques de quenuales**.</p>
+                    <p>Para los aventureros, ofrece un recorrido inolvidable. Y si buscas desafíos mayores, te invitan a explorar paisajes de alta montaña y realizar trekking de nivel mundial.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Festividades</h2>
+            <div class="section-content">
+                <div class="section-text">
+                    <p>El calendario de Huallanca está lleno de vibrantes celebraciones. La festividad de "Los Negritos de Huallanca (diciembre-enero)"" es un espectáculo de color, música y danza, declarada Patrimonio Cultural de la Nación. En julio, la "Semana Taurina" congrega a propios y extraños con emocionantes corridas de toros, deliciosas pachamancas comunitarias y danzas tradicionales que llenan las calles de alegría.</p>
+                    <p>No te pierdas la celebración del "Aniversario del distrito cada 21 de noviembre", una fecha llena de desfiles y actividades cívicas. Además, los "carnavales y diversas ferias" a lo largo del año ofrecen una ventana a la rica cultura y tradiciones locales, donde podrás interactuar con la comunidad y conocer sus costumbres.</p>
+                </div>
+                <div class="section-image">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfh9nrTHvyicskmg3wQUnGXdP3ZArCRXM2tj2Eqvu2wC8VIN0cf_20rSiGlojSp_-0cGadY8ddomV0SBiDXp3_zVmHChBD7rJG1HU_ah6WKnSmeJrsLr4hz4otXMy_rDuenCUwsMF-M3bQ/s1600/100_6519.JPG" alt="Fiesta Taurina">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Transporte</h2>
+            <div class="section-content">
+                <div class="section-image">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWyTwGN3o1u2Rk5DEJo8_2o8Dn4OG3BhrfE88koonKYsGjP19fJ2kUY4RZtR1iFU6EhOyPdGHwsZo59kNQS6vyiuj3NNZnFInG5eeyUu5tX-CMo-TUj40nxlw_0Z2FTA5R1eo0bQK_TMMv/s1600/Movil+3.png" alt="Imagen de ruta hacia Huallanca">
+                </div>
+                <div class="section-text">
+                    <p>Llegar a Huallanca es más fácil de lo que piensas. Desde Lima, el viaje toma aproximadamente "7 horas" siguiendo la ruta de la Panamericana Norte hasta Paramonga, luego Conococha y finalmente Huallanca. Si vienes desde Huaraz, el trayecto es mucho más corto, entre "2.5 y 3 horas", con minibuses que salen diariamente, ofreciendo un viaje escénico a través de los Andes.</p>
+                    <p>También existen otras rutas desde localidades como Barranca, La Unión, y diversas comunidades internas, facilitando el acceso desde diferentes puntos. Empresas de transporte como "Turismo Cavassa y Trans Huallanca E.I.R.L."" brindan servicios confiables para tu viaje.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Información al Turista</h2>
+            <div class="section-content">
+                <div class="section-text">
+                    <p>Huallanca se encuentra a una "altitud de aproximadamente 3,540 m s.n.m.", lo que la dota de un clima particular. El "clima es predominantemente seco de mayo a octubre", ideal para actividades al aire libre, y "lluvioso de noviembre a abril". Durante los meses de junio a agosto, pueden presentarse heladas, por lo que es recomendable empacar ropa abrigadora.</p>
+                    <p>Para adaptarte mejor a la altitud y prevenir el mal de altura (soroche), te recomendamos "tomar té de coca o pastillas específicas" antes y durante tu viaje. La "mejor época para visitar Huallanca es de enero a mayo", cuando el clima es más agradable y las festividades son abundantes, permitiéndote disfrutar al máximo de todo lo que este hermoso lugar tiene para ofrecer.</p>
+                </div>
+                <div class="section-image">
+                    <img src="https://i.ytimg.com/vi/AkwmXG_MQ0w/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBPdxZ9MRR5fjnak313K73HCKnqcw" alt="Imagen de paisaje andino de Huallanca">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>MUNICIPALIDAD DE HUALLANCA</p>
+            </div>
+            <div class="footer-right">
+                <span class="curly-brace"></span>
+                <div class="contact-info">
+                    <p>Información de contacto:</p>
+                    <ul>
+                        <li><a href="tel:+51987654321"><i class="fas fa-phone"></i> +51 987 654 321</a></li>
+                        <li><a href="mailto:info@huallancaturismo.gob.pe"><i class="fas fa-envelope"></i> info@huallancaturismo.gob.pe</a></li>
+                    </ul>
+                    <p>Síguenos en redes sociales:</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <form class="contact-form">
+                        <p>Envíanos un mensaje:</p>
+                        <input type="text" placeholder="Tu Nombre">
+                        <input type="email" placeholder="Tu Correo">
+                        <textarea placeholder="Tu Mensaje"></textarea>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="credits">© 2025 Municipalidad de Huallanca | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // JavaScript for mobile menu dropdown
+            const hasSubmenuLinks = document.querySelectorAll('.main-nav .has-submenu > a');
+
+            hasSubmenuLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    // Check if it's a small screen or if the link has a submenu
+                    // The 'window.innerWidth <= 768' condition activates mobile menu behavior
+                    if (window.innerWidth <= 768 || link.parentElement.querySelector('.submenu')) {
+                        event.preventDefault(); // Prevent default link behavior on click
+
+                        const parentLi = event.target.closest('.has-submenu');
+                        const submenu = parentLi.querySelector('.submenu');
+                        const caretIcon = parentLi.querySelector('.fa-caret-down');
+
+                        if (submenu) {
+                            // Close other open submenus
+                            document.querySelectorAll('.main-nav .submenu').forEach(sub => {
+                                if (sub !== submenu && sub.classList.contains('active-submenu')) {
+                                    sub.classList.remove('active-submenu');
+                                    sub.style.maxHeight = null; // Collapse other submenus
+                                    const otherCaretIcon = sub.parentElement.querySelector('.fa-caret-down');
+                                    if (otherCaretIcon) otherCaretIcon.style.transform = 'rotate(0deg)';
+                                }
+                            });
+
+                            // Toggle current submenu
+                            submenu.classList.toggle('active-submenu');
+
+                            if (submenu.classList.contains('active-submenu')) {
+                                submenu.style.maxHeight = submenu.scrollHeight + "px"; // Expand
+                                if (caretIcon) caretIcon.style.transform = 'rotate(180deg)';
+                            } else {
+                                submenu.style.maxHeight = null; // Collapse
+                                if (caretIcon) caretIcon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Huallanca Turístico - Contáctenos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+    
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333; /* Added base text color */
+        }
+
+        /* ==== Header principal ==== */
+        header {
+            background-color: #0d47a1; /* Adjusted to match original header color */
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added shadow for consistency */
+            position: sticky; /* Sticky header */
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* ==== Contenedor general del header ==== */
+        .header-wrapper {
+            max-width: 1200px; /* Adjusted to match original max-width */
+            margin: 0 auto;
+            padding: 0 20px; /* Adjusted padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ==== Logo ==== */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+            margin-right: 0; /* No margin-right, as text is not next to it in original */
+        }
+
+        /* Removed .logo span styles as the original header didn't have text next to logo */
+
+        /* ==== Navegación principal ==== */
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px; /* Adjusted gap */
+            position: relative;
+            z-index: 100;
+        }
+
+        .main-nav ul li {
+            position: relative;
+        }
+
+        .main-nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px; /* Adjusted padding */
+            display: block;
+            transition: background-color 0.3s ease; /* Changed to background for hover effect */
+            white-space: nowrap;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #1976d2; /* Lighter blue on hover */
+            border-radius: 5px;
+            color: white; /* Keep text white on hover */
+        }
+
+        .main-nav ul li .fa-caret-down {
+            margin-left: 5px;
+            font-size: 1em; /* Adjusted font size */
+            transition: transform 0.3s ease;
+        }
+
+        /* ==== Submenús ==== */
+        .main-nav ul li .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background-color: #1976d2; /* Lighter blue for submenu */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adjusted shadow */
+            border-radius: 0 0 5px 5px;
+            padding: 0; /* Adjusted padding */
+            margin: 0; /* Adjusted margin */
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            transform: translateY(10px);
+            list-style: none; /* Ensure no bullets */
+        }
+
+        .main-nav ul li.has-submenu:hover > .submenu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .main-nav ul li .submenu li a {
+            padding: 10px 20px; /* Adjusted padding */
+            color: white; /* Submenu text color */
+            font-weight: normal;
+            transition: background-color 0.3s ease; /* Transition for submenu links */
+        }
+
+        .main-nav ul li .submenu li a:hover {
+            background-color: #42a5f5; /* Even lighter blue on submenu hover */
+            color: white; /* Keep text white on hover */
+        }
+
+        .main-nav ul li.has-submenu:hover > a .fa-caret-down {
+            transform: rotate(180deg);
+        }
+
+        /* ==== Responsive Header ==== */
+        @media (max-width: 768px) {
+            .header-wrapper {
+                flex-direction: column;
+                align-items: center; /* Center items for mobile */
+                padding: 0 5px; /* Adjust padding for mobile */
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                gap: 0; /* Remove gap for stacked items */
+                margin-top: 10px; /* Space between logo and menu */
+            }
+
+            .main-nav ul li {
+                width: 100%;
+                text-align: center; /* Center menu items */
+            }
+
+            .main-nav ul li a {
+                padding: 10px 0; /* Adjust padding for full-width links */
+            }
+
+            .main-nav ul li .submenu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                background-color: #1976d2; /* Keep background for mobile submenu */
+                padding-left: 0; /* Remove padding */
+                border-radius: 0; /* Remove border-radius */
+                max-height: 0; /* For collapse animation */
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            .main-nav ul li.has-submenu .submenu.active-submenu {
+                max-height: fit-content; /* Expand submenu */
+            }
+
+            .main-nav ul li .submenu li a {
+                padding: 10px 0; /* Adjust submenu link padding for mobile */
+            }
+
+            .main-nav ul li.has-submenu:hover > .submenu {
+                display: none; /* Disable hover opening for mobile */
+            }
+        }
+
+        /* ==== Main Content Styling ==== */
+        main {
+            max-width: 1200px; /* Consistent max-width */
+            margin: 30px auto; /* Increased margin for main content */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 100%; /* Make container full width of main */
+            margin: 0; /* Remove margin, main handles it */
+            padding: 0; /* Remove padding, main handles it */
+            background-color: transparent; /* Transparent background */
+            box-shadow: none; /* No extra shadow */
+        }
+
+        h2 {
+            text-align: center;
+            color: #0056b3;
+            margin-bottom: 30px;
+            font-size: 2.5em; /* Larger heading for main title */
+        }
+
+        /* Contact Section */
+        .contact-info,
+        .contact-form {
+            margin-bottom: 40px;
+            padding: 20px; /* Add padding to sections */
+            border: 1px solid #eee; /* Light border for sections */
+            border-radius: 8px;
+            background-color: #fcfcfc; /* Slightly different background */
+        }
+
+        .contact-info h3, .contact-form h3 {
+            color: #0d47a1; /* Use main brand color for subheadings */
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            text-align: center; /* Center subheadings */
+        }
+
+
+        .social-media {
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid #eee; /* Separator for social media */
+            padding-top: 20px;
+        }
+
+        .social-media a {
+            display: inline-block;
+            margin: 0 15px; /* Increased margin */
+            color: #0d47a1; /* Consistent brand color */
+            font-size: 28px; /* Larger icons */
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.2s ease; /* Add transform transition */
+        }
+
+        .social-media a:hover {
+            color: #42a5f5; /* Lighter hover color */
+            transform: translateY(-3px); /* Subtle hover effect */
+        }
+
+        /* Contact Form */
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1em;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%; /* Full width */
+            padding: 12px; /* Increased padding */
+            margin-bottom: 20px;
+            border: 1px solid #ccc; /* Lighter border */
+            border-radius: 6px; /* Slightly more rounded */
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px; /* Increased min-height */
+        }
+
+        .contact-form button:hover {
+            background-color: #1976d2;
+        }
+
+       
+
+        /* ==== Footer Styles (from original index.html) ==== */
+        footer {
+            background-color: #0d47a1;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .footer-left p {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+       
+
+        .contact-info p {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 15px 0;
+        }
+
+        .contact-info ul li {
+            margin-bottom: 5px;
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #bbdefb;
+            text-align: center;
+        }
+
+       
+
+       
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrapper">
+            <div class="logo">
+                <img src="img/loghua.png" alt="Logo de Huallanca"> </div>
+            <nav class="main-nav"> <ul>
+                    <li class="has-submenu">
+                        <a href="#">INICIO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="index.html">Página Principal</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="Historia y Cultura.html">HISTORIA Y CULTURA</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">TURISMO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="circuitos arqueologicos.html">Circuitos Arqueológicos</a></li>
+                            <li><a href="circuitos urbanos.html">Circuitos Urbanos</a></li>
+                            <li><a href="hospedaje.html">Hospedajes</a></li>
+                            <li><a href="gastronimia.html">Gastronomía</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">FESTIVIDADES <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="fiestas patronales.html">Fiestas Patronales</a></li>
+                            <li><a href="eventos culturales.html">Eventos Culturales</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="servicios.html">SERVICIOS</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contactos.html">CONTACTO</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Contáctenos</h2>
+
+            <div class="contact-info">
+                <h3>Información de Contacto</h3>
+                <p><i class="fas fa-phone-alt"></i> Teléfono: +51 987 654 123</p>
+                <p><i class="fas fa-envelope"></i> Email: info_turshuallanca@email.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Dirección: Plaza de Armas de Huallanca</p>
+
+                <div class="social-media">
+                    <a href="https://facebook.com/tuempresa" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/tuempresa" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/tuempresa" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/company/tuempresa" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="contact-form">
+                <h3>Envíanos un Mensaje</h3>
+                <form action="#" method="POST">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="subject">Asunto:</label>
+                    <input type="text" id="subject" name="subject">
+
+                    <label for="message">Mensaje:</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>MUNICIPALIDAD DE HUALLANCA</p>
+            </div>
+            <div class="footer-right">
+                <span class="curly-brace"></span>
+                <div class="contact-info">
+                    <p>Información de contacto:</p>
+                    <ul>
+                        <li><a href="tel:+51987654321"><i class="fas fa-phone"></i> +51 987 654 321</a></li>
+                        <li><a href="mailto:info@huallancaturismo.gob.pe"><i class="fas fa-envelope"></i> info@huallancaturismo.gob.pe</a></li>
+                    </ul>
+                    <p>Síguenos en redes sociales:</p>
+                    
+                    <form class="contact-form-footer"> <p>Envíanos un mensaje:</p>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="credits">© 2025 Municipalidad de Huallanca | Todos los derechos reservados</p>
+    </footer>
+
+</body>
+</html>
