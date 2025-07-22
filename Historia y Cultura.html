@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huallanca - Historia y Cultura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="index.html">
+<style>
+        /* Basic styling for demonstration. You should integrate this into your style.css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .main-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative;
+            max-width: 1000px; /* Adjust as needed */
+            margin: 0 auto 40px auto;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .slides-container {
+            display: flex;
+            transition: transform 0.s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        @media (min-width: 768px) {
+            .slide {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+
+            .slide.reverse-layout {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .slide-image {
+            width: 100%;
+            max-width: 450px; /* Adjust as needed */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .slide-image {
+                margin-bottom: 0;
+            }
+        }
+
+        .slide-image img {
+            width: 150%;
+            height: auto;
+            display: block;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .slide-content h4 {
+            color: #f39c12;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .slide-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(44, 62, 80, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 50%;
+            z-index: 10;
+            transition: background-color 0.100s ease;
+
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(44, 62, 80, 0.9);
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+
+        .pagination-dots {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #f39c12;
+        }
+
+        /* Header and Footer basic styles (from your original, assume style.css handles full styling) */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .main-nav ul li {
+            position: relative;
+        }
+
+        .main-nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #34495e;
+        }
+
+        .main-nav .submenu {
+            display: none;
+            position: absolute;
+            background-color: #2c3e50;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            max-height: 0; /* For smooth transition */
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .main-nav li:hover > .submenu,
+        .main-nav .submenu.active-submenu {
+            display: block;
+            max-height: fit-content; /* Adjust based on content */
+        }
+
+        .main-nav .submenu li a {
+            padding: 12px 20px;
+            white-space: nowrap;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        .footer-left p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 40px;
+            position: relative;
+        }
+
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .contact-info ul li {
+            margin-bottom: 8px;
+        }
+
+        .contact-info ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #f39c12;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .contact-form button {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #e67e22;
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="img/loghua.png" alt="Logo de Huallanca">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">INICIO</a></li>
+                    <li class="has-submenu">
+                        <a href="Historia y Cultura.html">HISTORIA Y CULTURA</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">TURISMO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="circuitos arqueologicos.html">Circuitos Arqueológicos</a></li>
+                            <li><a href="circuitos urbanos.html">Circuitos Urbanos</a></li>
+                            <li><a href="hospedaje.html">Hospedajes</a></li>
+                            <li><a href="gastronimia.html">Gastronomía</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">FESTIVIDADES <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="fiestas patronales.html">Fiestas Patronales</a></li>
+                            <li><a href="eventos culturales.html">Eventos Culturales</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="servicios.html">SERVICIOS</a></li>
+                    <li><a href="contactos.html">CONTACTO</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <h3>Historia y Cultura de Huallanca, Bolognesi, Ancash</h3>
+        
+        <section class="history-carousel-section">
+            <h4>La Historia Ancestral de Huallanca</h4>
+            <div class="carousel-container" id="historyCarousel">
+                <div class="slides-container">
+                    <div class="slide">
+                        <div class="slide-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Antigua_Fundici%C3%B3n_Minera.JPG" alt="Antiguos cultura  de Huallanca">
+                        </div>
+                        <div class="slide-content">
+                            <h4>Orígenes Prehispánicos</h4>
+                            <p>La "historia de Huallanca" se teje desde tiempos inmemoriales, mucho antes de la llegada de los incas y españoles. Evidencias arqueológicas sugieren la presencia de antiguas culturas prehispánicas, que dejaron su legado en la región. Estos pueblos originarios desarrollaron complejas sociedades agrícolas y ceremoniales, adaptándose a la geografía andina y construyendo impresionantes estructuras que aún hoy maravillan.</p>
+                        </div>
+                    </div>
+                    <div class="slide reverse-layout">
+                        <div class="slide-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Huellas_de_dinosaurios%2C_quebrada_Palmadera%2C_km_80_carretera_a_Antamina.JPG/640px-Huellas_de_dinosaurios%2C_quebrada_Palmadera%2C_km_80_carretera_a_Antamina.JPG" alt="Influencia Incaica en Huallanca">
+                        </div>
+                        <div class="slide-content">
+                            <h4>Periodo Incaico</h4>
+                            <p>Durante el "Imperio Incaico", Huallanca formó parte del vasto Tahuantinsuyo, sirviendo probablemente como un punto estratégico en las rutas comerciales y de comunicación. La influencia incaica se puede apreciar en ciertas técnicas agrícolas y en la organización social que perduró por siglos.</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-image">
+                            <img src="https://scontent.flim4-3.fna.fbcdn.net/v/t1.6435-9/131325999_2762366554013994_485533495603139737_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=NdbVvd0odKAQ7kNvwGjd5mG&_nc_oc=AdmU1UjOEeVBSjSvd8vxs3Dh72JuFKEPtku6zgtNaeGphyZzzN6jB5y6WJHKcEM2U2s&_nc_zt=23&_nc_ht=scontent.flim4-3.fna&_nc_gid=WQias8VfRXadeEoCW7RxVQ&oh=00_AfOzP3vI02VVr7HxRbDfPkQVQ0WWgs46CwNbp0IBqz67CA&oe=688F45CC" alt="Época colonial de Huallanca">
+                        </div>
+                        <div class="slide-content">
+                            <h4>Transformación Colonial</h4>
+                            <p>Con la llegada de los españoles, la región experimentó una profunda transformación. Se establecieron haciendas y se inició la explotación minera, actividades que marcaron la economía local y la vida de sus habitantes. A pesar de los cambios, la esencia andina de Huallanca ha perdurado, fusionándose con elementos coloniales para dar forma a su identidad actual. Puedes explorar estos relatos en el **Museo Municipal de Huallanca**, donde se conservan piezas que narran nuestro pasado.</p>
+                            <p>Entre los "sitios arqueológicos" más destacados cercanos a Huallanca se encuentran "Sagrapetaca" y " Sheglla y Shipan, que se cree que funcionaron como zonas de vigilancia por su ubicación estratégica", los cuales ofrecen una ventana fascinante a las civilizaciones que habitaron este valle mucho antes de nuestra era.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-button prev" data-carousel="historyCarousel">&#10094;</button>
+                <button class="carousel-button next" data-carousel="historyCarousel">&#10095;</button>
+                <div class="pagination-dots" id="historyPagination"></div>
+            </div>
+        </section>
+
+        <hr> 
+        <section class="culture-carousel-section">
+            <h4>La Vibrante Cultura de Huallanca</h4>
+            <div class="carousel-container" id="cultureCarousel">
+                <div class="slides-container">
+                    <div class="slide">
+                        <div class="slide-image">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEju3AKPMnUe0PbOhaDupzcrz8deSYmute5wnVBw72zqU-QLJy00BxAluurKgT6akOhp3a6UITd-j179MyIWl61R9uIWfzjWjabRApEtC0ZBWrfxniJwFUPyJ26E_sTuxhnBJyXp5KeKgoU4/s1920/P12.jpg" alt="Gastronomía tradicional de Huallanca">
+                        </div>
+                        <div class="slide-content">
+                            <h4>Gastronomía y Artesanía</h4>
+                            <p>La "cultura de Huallanca" es un tapiz rico y colorido, una fusión de tradiciones ancestrales andinas y costumbres heredadas de la época colonial. Se manifiesta vívidamente en cada rincón del pueblo, desde su "gastronomía" única, que utiliza productos frescos de la tierra para crear sabores auténticos, hasta la elaborada "artesanía" que refleja la habilidad y creatividad de sus pobladores.</p>
+                        </div>
+                    </div>
+                    <div class="slide reverse-layout">
+                        <div class="slide-image">
+                            <img src="https://perufolkradio.com/wp-content/uploads/2023/11/negritos-de-huallanca-ancash.jpg" alt="Danza tradicional de Huallanca">
+                        </div>
+                        <div class="slide-content">
+                            <h4>Festividades y Folklore</h4>
+                            <p>Las "festividades tradicionales" son el corazón de nuestra identidad cultural. La más importante es la "Fiesta Patronal de lo Negritos", celebrada con gran devoción y alegría. Durante estas festividades, las calles se llenan de música, danzas folklóricas como el Huaridanza de Los Negritos, coloridos trajes típicos y procesiones. Estas celebraciones no solo son actos de fe, sino también una expresión profunda de la cosmovisión andina y la cohesión comunitaria.</p>
+                            <p>El "folklore" de Huallanca está impregnado de mitos y leyendas transmitidas de generación en generación, que hablan de apus (montañas sagradas), seres míticos y eventos que dan sentido a la vida en los Andes. Participar en los **talleres artesanales** locales te permitirá aprender técnicas ancestrales y llevarte a casa una pieza única de la cultura huallanquina, ya sean tejidos, cerámicas o trabajos en piedra.</p>
+                            <p>La calidez de su gente y la preservación de sus costumbres hacen de Huallanca un lugar donde la tradición se vive y se comparte, invitando a los visitantes a sumergirse en una experiencia cultural auténtica y memorable.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-button prev" data-carousel="cultureCarousel">&#10094;</button>
+                <button class="carousel-button next" data-carousel="cultureCarousel">&#10095;</button>
+                <div class="pagination-dots" id="culturePagination"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>MUNICIPALIDAD DE HUALLANCA</p>
+            </div>
+            <div class="footer-right">
+                <span class="curly-brace"></span>
+                <div class="contact-info">
+                    <p>Información de contacto:</p>
+                    <ul>
+                        <li><a href="tel:+51987654321"><i class="fas fa-phone"></i> +51 987 654 321</a></li>
+                        <li><a href="mailto:info@huallancaturismo.gob.pe"><i class="fas fa-envelope"></i> info@huallancaturismo.gob.pe</a></li>
+                    </ul>
+                    <p>Síguenos en redes sociales:</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <form class="contact-form">
+                        <p>Envíanos un mensaje:</p>
+                        <input type="text" placeholder="Tu Nombre">
+                        <input type="email" placeholder="Tu Correo">
+                        <textarea placeholder="Tu Mensaje"></textarea>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <p class="credits">© 2025 Municipalidad de Huallanca | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        function initializeCarousel(carouselId) {
+            const carouselContainer = document.getElementById(carouselId);
+            if (!carouselContainer) return;
+
+            const slidesContainer = carouselContainer.querySelector('.slides-container');
+            const slides = carouselContainer.querySelectorAll('.slide');
+            const prevButton = carouselContainer.querySelector('.carousel-button.prev');
+            const nextButton = carouselContainer.querySelector('.carousel-button.next');
+            const paginationDotsContainer = carouselContainer.querySelector('.pagination-dots');
+
+            let currentSlideIndex = 0;
+            let autoSlideInterval;
+
+            function createPaginationDots() {
+                paginationDotsContainer.innerHTML = '';
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    dot.dataset.slideIndex = index;
+                    if (index === currentSlideIndex) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', () => {
+                        currentSlideIndex = index;
+                        showSlide();
+                        resetAutoSlide();
+                    });
+                    paginationDotsContainer.appendChild(dot);
+                });
+            }
+
+            function showSlide() {
+                slidesContainer.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+                updatePaginationDots();
+            }
+
+            function updatePaginationDots() {
+                paginationDotsContainer.querySelectorAll('.dot').forEach((dot, index) => {
+                    if (index === currentSlideIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                showSlide();
+            }
+
+            function prevSlide() {
+                currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                showSlide();
+            }
+
+            function startAutoSlide() {
+                if (slides.length > 1) { // Only start if there's more than one slide
+                    autoSlideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+                }
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+
+            prevButton.addEventListener('click', () => {
+                prevSlide();
+                resetAutoSlide();
+            });
+
+            nextButton.addEventListener('click', () => {
+                nextSlide();
+                resetAutoSlide();
+            });
+
+            carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+            carouselContainer.addEventListener('mouseleave', startAutoSlide);
+
+            // Initial setup
+            createPaginationDots();
+            showSlide();
+            startAutoSlide();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCarousel('historyCarousel');
+            initializeCarousel('cultureCarousel');
+
+            // JavaScript para el menú móvil (abre/cierra el submenú al hacer clic)
+            const hasSubmenuLinks = document.querySelectorAll('.main-nav .has-submenu > a');
+
+            hasSubmenuLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    // Only prevent default and toggle submenu if on mobile or if it's a submenu link
+                    if (window.innerWidth <= 768 || link.parentElement.querySelector('.submenu')) {
+                        event.preventDefault();
+
+                        const parentLi = event.target.closest('.has-submenu');
+                        const submenu = parentLi.querySelector('.submenu');
+
+                        if (submenu) {
+                            // Close other open submenus
+                            document.querySelectorAll('.main-nav .submenu').forEach(sub => {
+                                if (sub !== submenu && sub.classList.contains('active-submenu')) {
+                                    sub.classList.remove('active-submenu');
+                                    sub.style.maxHeight = null;
+                                    const otherCaretIcon = sub.parentElement.querySelector('.fa-caret-down');
+                                    if (otherCaretIcon) otherCaretIcon.style.transform = 'rotate(0deg)';
+                                }
+                            });
+
+                            submenu.classList.toggle('active-submenu');
+                            const caretIcon = parentLi.querySelector('.fa-caret-down');
+
+                            if (submenu.classList.contains('active-submenu')) {
+                                submenu.style.maxHeight = submenu.scrollHeight + "px";
+                                if (caretIcon) caretIcon.style.transform = 'rotate(180deg)';
+                            } else {
+                                submenu.style.maxHeight = null;
+                                if (caretIcon) caretIcon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

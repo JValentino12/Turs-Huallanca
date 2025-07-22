@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huallanca - Hospedajes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="index.html">
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #0056b3; /* Darker blue */
+            --secondary-color: #007bff; /* Bright blue */
+            --accent-color: #ffc107; /* Yellow/Gold */
+            --text-color: #333;
+            --light-bg: #cce2f8;
+            --dark-bg: #3979b9;
+            --white: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-bg);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Remove extra space below images */
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1em;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .main-nav ul {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .main-nav li {
+            position: relative;
+        }
+
+        .main-nav a {
+            color: var(--white);
+            padding: 10px 15px;
+            display: block;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            background-color: var(--primary-color);
+        }
+
+        .main-nav .fa-caret-down {
+            margin-left: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .main-nav .submenu {
+            display: none;
+            position: absolute;
+            background-color: var(--dark-bg);
+            box-shadow: var(--box-shadow);
+            min-width: 200px;
+            z-index: 100;
+            top: 100%;
+            left: 0;
+            border-radius: var(--border-radius);
+            overflow: hidden; /* Ensures rounded corners are visible */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .main-nav .has-submenu:hover > .submenu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main-nav .submenu li {
+            width: 100%;
+        }
+
+        .main-nav .submenu a {
+            padding: 10px 20px;
+            white-space: nowrap;
+        }
+
+        /* Active submenu on mobile */
+        .main-nav .submenu.active-submenu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            max-height: fit-content; /* Set dynamically by JS */
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        section {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        section h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        section h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Hero Section for Hospedajes */
+        .hero-hospedajes {
+            position: relative;
+            height: 300px;
+            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbsGH7P4Sey9TLQ21cmNvVd4i-vA_-J7oYRfTXlXlXlg7o3LMEo_uW7gSXinB2w2Mn5iwaRGXIQFl0mhoRLIxHhmnD1rds4KKxt0kPJ2_UtnLY_8nPFAqJkTVWH33WR1WCntZfGnZwmcu6K1FRyEEEu-x3C_TphbvP6MlvxwYS7A8SMSaN_v6TIgeZ-5LK/s2048/334707_283643521753767_119411943_o.jpg'); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .hero-hospedajes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 1;
+        }
+
+        .hero-hospedajes-text {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .hero-hospedajes-text h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-hospedajes-text h2 {
+            font-size: 1.8em;
+            color: var(--white);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Accommodation Listing */
+        .accommodation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .accommodation-item {
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .accommodation-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .accommodation-item h4 {
+            padding: 15px 20px 0;
+            color: var(--primary-color);
+            font-size: 1.5em;
+        }
+
+        .accommodation-item .details {
+            padding: 0 20px 20px;
+            font-size: 0.95em;
+        }
+
+        .accommodation-item .details p {
+            margin-bottom: 0.5em;
+        }
+
+        .accommodation-item .details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .accommodation-item .details strong {
+            color: var(--primary-color);
+        }
+
+        /* Carousel Styles (Reused/Adapted) */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px; /* Fixed height for image carousels */
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .carousel-slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            font-size: 1.5em;
+            color: #666;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute; /* To stack them for fading effect */
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            visibility: visible;
+            position: relative; /* Make active slide visible and take space */
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the area, cropping if necessary */
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 2;
+            font-size: 1.5em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-prev {
+            left: 10px;
+        }
+
+        .carousel-next {
+            right: 10px;
+        }
+
+        .carousel-pagination {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .carousel-pagination .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .carousel-pagination .dot.active {
+            background-color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            text-align: left;
+        }
+
+        .footer-left {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-left p {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--white);
+        }
+
+        .footer-right {
+            flex: 2;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .contact-info {
+            background-color: #495057;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-info p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--light-bg);
+        }
+
+        .contact-info ul {
+            margin-bottom: 20px;
+        }
+
+        .contact-info li {
+            margin-bottom: 10px;
+        }
+
+        .contact-info a {
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05em;
+        }
+
+        .contact-info a:hover {
+            color: var(--white);
+        }
+
+        .social-icons {
+            margin-top: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            font-size: 1.8em;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #f0f0f0;
+            color: var(--text-color);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .contact-form button {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .main-nav li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav .submenu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                background-color: rgba(0, 0, 0, 0.3); /* Slightly transparent */
+                border-radius: 0;
+                transform: translateY(0);
+                opacity: 1;
+                max-height: 0; /* Hidden by default */
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            .main-nav .has-submenu:hover > .submenu {
+                display: none; /* Disable hover effect for mobile */
+            }
+
+            .main-nav .submenu.active-submenu {
+                display: block; /* Controlled by JS click */
+                max-height: 200px; /* Or calculated scrollHeight */
+            }
+
+            .main-nav a .fa-caret-down {
+                transition: transform 0.3s ease;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-left, .footer-right {
+                width: 100%;
+                text-align: center;
+            }
+
+            .contact-info ul {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-hospedajes-text h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-hospedajes-text h2 {
+                font-size: 1.2em;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .accommodation-item {
+                padding: 15px;
+            }
+
+            .accommodation-item h4 {
+                font-size: 1.3em;
+            }
+
+            .accommodation-item .details {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="img/loghua.png" alt="Logo de Huallanca">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="has-submenu">
+                        <a href="index.html">INICIO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="index.html">Página Principal</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="Historia y Cultura.html">HISTORIA Y CULTURA</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">TURISMO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="circuitos arqueologicos.html">Circuitos Arqueológicos</a></li>
+                            <li><a href="circuitos urbanos.html">Circuitos Urbanos</a></li>
+                            <li><a href="hospedaje.html" class="active">Hospedajes</a></li>
+                            <li><a href="gastronimia.html">Gastronomía</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">FESTIVIDADES <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="fiestas patronales.html">Fiestas Patronales</a></li>
+                            <li><a href="eventos culturales.html">Eventos Culturales</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="servicios.html">SERVICIOS <i class=""></i></a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contactos.html">CONTACTO</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="hero-hospedajes">
+            <div class="hero-hospedajes-text">
+                <h1>HOSPEDAJES EN HUALLANCA</h1>
+                <h2>Encuentra tu Lugar Ideal para Descansar</h2>
+            </div>
+        </section>
+
+        <section class="accommodation-listing">
+            <h3>Nuestras Recomendaciones</h3>
+            <div class="accommodation-grid">
+
+                <div class="accommodation-item">
+                    <div class="carousel-container" data-carousel-id="hotelelPueblo">
+                        <div class="carousel-slides">
+                            <div class="carousel-slide active"><img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npE-2MfSWZ39SVfn4UMvNxbX7VKnTknO-ZLf4YdiaCZ0f_PH5AkqPW6V_zl9dlWaKW7005HxYzh1USbeDYNOoIv1MQGZScb9j07H9IQLT18eKjnNfUEVGHH1yFYhJxsfam0TIes=w252-h448-k-no" alt="Habitación Hotel"></div>
+                            <div class="carousel-slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4npac2kcffGCvhE4OJ5cfUkzC-SJvX07k3icBM4lAZfxOsviN2RNj7ODyifZH_hQmC0_uk5N2N18cuADDutr8Ykrgb6RmwRJ6fnlnuR7jq4H_d_1WqWqphHqyBevEBd6RF9C9z1OUw=w252-h189-k-no" alt="Exterior Hotel "></div>
+                            <div class="carousel-slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr5bRawIZuyGecLtN5TXrEk5KmyA1N6ndZvU5R8hHseSuFMrujrM2oeEggquxKIxZS8X3Ir7baUY8jj-DyCJlkxikqkttUGLB_2u2hwtW9d8FH2zUIbS0ZYDd7tpf1flgSX5Cip=w253-h189-k-no" alt="Lobby Hotel "></div>
+                        </div>
+                        <button class="carousel-button carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="carousel-button carousel-next"><i class="fas fa-chevron-right"></i></button>
+                        <div class="carousel-pagination"></div>
+                    </div>
+                    <h4>Hotel el Pueblo</h4>
+                    <div class="details">
+                        <p><strong>Descripción:</strong> Un acogedor hotel con vistas a las montañas, ideal para familias y parejas. Ofrece desayuno incluido y Wi-Fi gratuito.</p>
+                        <p><strong>Servicios:</strong> Restaurante, bar, lavandería, estacionamiento.</p>
+                        <p><strong>Dirección:</strong> Av. Principal 123, Huallanca.</p>
+                        <p><strong>Teléfono:</strong> <a href="tel:+51995230981">+51 995230981</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:info@hotelandino.com">info@hotelandino.com</a></p>
+                    </div>
+                </div>
+
+                <div class="accommodation-item">
+                    <div class="carousel-container" data-carousel-id="hostalDescanso">
+                        <div class="carousel-slides">
+                            <div class="carousel-slide active"><img src="https://media-cdn.tripadvisor.com/media/photo-s/0a/b3/9c/c3/hotel-luna-azul.jpg" alt="Habitación Hostal El Descanso 1"></div>
+                            <div class="carousel-slide"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-s/02/db/b6/09/hotel-inca.jpg?w=500&h=400&s=1" alt="Área común Hostal El Descanso"></div>
+                            <div class="carousel-slide"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyUUYDx1nohXaZ0n65Tie2fpDSigoqMb3ebA&s" alt="Jardín Hostal El Descanso"></div>
+                        </div>
+                        <button class="carousel-button carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="carousel-button carousel-next"><i class="fas fa-chevron-right"></i></button>
+                        <div class="carousel-pagination"></div>
+                    </div>
+                    <h4>Hostal El Descanso</h4>
+                    <div class="details">
+                        <p><strong>Descripción:</strong> Un hostal económico y cómodo, perfecto para viajeros individuales y grupos. Ambiente tranquilo y personal amable.</p>
+                        <p><strong>Servicios:</strong> Cocina compartida, terraza, información turística.</p>
+                        <p><strong>Dirección:</strong> Calle Los Andes 456, Huallanca.</p>
+                        <p><strong>Teléfono:</strong> <a href="tel:+51976543210">+51 976 543 210</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:reservas@hostaleldescanso.com">reservas@hostaleldescanso.com</a></p>
+                    </div>
+                </div>
+
+                <div class="accommodation-item">
+                    <div class="carousel-container" data-carousel-id="solNaciente">
+                        <div class="carousel-slides">
+                            <div class="carousel-slide active"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyhv-scPZXhobLDjbWO0mxHqZ5RexbWEMZ2KFdENPfOd3Cuio2bOnfg8q9RUmq1sxqgoheDsTAPbYz-wSdQQw0-Xju3rjR7Hicg4D_FvURlyFoNb7rQFMofsPWrRuxnwfdQdqNR9Kq8ppy/s200/Eucalipto.JPG" alt="Cabaña Sol Naciente 1"></div>
+                            <div class="carousel-slide"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/12/c2/b8/hostal-spring-ii.jpg?w=1200&h=-1&s=1" alt="Exterior Sol Naciente"></div>
+                        </div>
+                        <button class="carousel-button carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="carousel-button carousel-next"><i class="fas fa-chevron-right"></i></button>
+                        <div class="carousel-pagination"></div>
+                    </div>
+                    <h4>Alojamiento Rural Sol Naciente</h4>
+                    <div class="details">
+                        <p><strong>Descripción:</strong> Cabañas rústicas con encanto, inmersas en la naturaleza. Ideal para una escapada relajante y desconectar.</p>
+                        <p><strong>Servicios:</strong> Área de parrilla, huerto orgánico, paseos a caballo.</p>
+                        <p><strong>Dirección:</strong> Vía a Marcara Km 5, Huallanca.</p>
+                        <p><strong>Teléfono:</strong> <a href="tel:+51912345678">+51 912 345 678</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:contacto@solnaciente.com">contacto@solnaciente.com</a></p>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>MUNICIPALIDAD DE HUALLANCA</p>
+            </div>
+            <div class="footer-right">
+                <div class="contact-info">
+                    <p>Información de contacto:</p>
+                    <ul>
+                        <li><a href="tel:+51987654321"><i class="fas fa-phone"></i> +51 987 654 321</a></li>
+                        <li><a href="mailto:info@huallancaturismo.gob.pe"><i class="fas fa-envelope"></i> info@huallancaturismo.gob.pe</a></li>
+                    </ul>
+                    <p>Síguenos en redes sociales:</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <form class="contact-form">
+                        <p>Envíanos un mensaje:</p>
+                        <input type="text" placeholder="Tu Nombre">
+                        <input type="email" placeholder="Tu Correo">
+                        <textarea placeholder="Tu Mensaje"></textarea>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="credits">© 2025 Municipalidad de Huallanca | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        function initializeCarousel(carouselElement) {
+            const slidesContainer = carouselElement.querySelector('.carousel-slides');
+            const slides = carouselElement.querySelectorAll('.carousel-slide');
+            const prevButton = carouselElement.querySelector('.carousel-prev');
+            const nextButton = carouselElement.querySelector('.carousel-next');
+            const paginationDotsContainer = carouselElement.querySelector('.carousel-pagination');
+
+            let currentSlideIndex = 0;
+            let autoSlideInterval;
+
+            function createPaginationDots() {
+                paginationDotsContainer.innerHTML = '';
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    dot.dataset.slideIndex = index;
+                    if (index === currentSlideIndex) {
+                        dot.classList.add('active');
+                    }
+                    paginationDotsContainer.appendChild(dot);
+                });
+                addDotEventListeners();
+            }
+
+            function addDotEventListeners() {
+                paginationDotsContainer.querySelectorAll('.dot').forEach(dot => {
+                    dot.addEventListener('click', (event) => {
+                        const index = parseInt(event.target.dataset.slideIndex);
+                        currentSlideIndex = index;
+                        showSlide();
+                        resetAutoSlide();
+                    });
+                });
+            }
+
+            function showSlide() {
+                slides.forEach((slide, index) => {
+                    if (index === currentSlideIndex) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+                updatePaginationDots();
+            }
+
+            function updatePaginationDots() {
+                paginationDotsContainer.querySelectorAll('.dot').forEach((dot, index) => {
+                    if (index === currentSlideIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                showSlide();
+                resetAutoSlide();
+            }
+
+            function prevSlide() {
+                currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                showSlide();
+                resetAutoSlide();
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(nextSlide, 4000); // Auto-slide every 4 seconds
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+
+            // Initialize
+            createPaginationDots();
+            showSlide();
+            startAutoSlide();
+
+            // Event Listeners
+            if (prevButton) prevButton.addEventListener('click', prevSlide);
+            if (nextButton) nextButton.addEventListener('click', nextSlide);
+
+            carouselElement.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+            carouselElement.addEventListener('mouseleave', startAutoSlide);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize all carousels on the page
+            document.querySelectorAll('.carousel-container').forEach(carousel => {
+                initializeCarousel(carousel);
+            });
+
+            // JavaScript for mobile menu (toggle submenu on click)
+            const hasSubmenuLinks = document.querySelectorAll('.main-nav .has-submenu > a');
+
+            hasSubmenuLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    if (window.innerWidth <= 768 || link.parentElement.querySelector('.submenu')) {
+                        event.preventDefault();
+
+                        const parentLi = event.target.closest('.has-submenu');
+                        const submenu = parentLi.querySelector('.submenu');
+                        const caretIcon = parentLi.querySelector('.fa-caret-down');
+
+                        if (submenu) {
+                            // Close other open submenus
+                            document.querySelectorAll('.main-nav .submenu').forEach(sub => {
+                                if (sub !== submenu && sub.classList.contains('active-submenu')) {
+                                    sub.classList.remove('active-submenu');
+                                    sub.style.maxHeight = null;
+                                    const otherCaretIcon = sub.parentElement.querySelector('.fa-caret-down');
+                                    if (otherCaretIcon) otherCaretIcon.style.transform = 'rotate(0deg)';
+                                }
+                            });
+
+                            // Toggle current submenu
+                            submenu.classList.toggle('active-submenu');
+
+                            if (submenu.classList.contains('active-submenu')) {
+                                submenu.style.maxHeight = submenu.scrollHeight + "px";
+                                if (caretIcon) caretIcon.style.transform = 'rotate(180deg)';
+                            } else {
+                                submenu.style.maxHeight = null;
+                                if (caretIcon) caretIcon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

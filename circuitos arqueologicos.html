@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huallanca - Circuitos Arqueológicos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="index.html">
+    <style>
+        
+        :root {
+            --primary-color: #2f2f30; 
+            --secondary-color: #003166;
+            --text-color: #333;
+            --light-gray: #5dbadf;
+            --dark-gray: #555;
+            --border-color: #1eadd1;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #4498ec;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: url('bp\'.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Optional: fixed background */
+        }
+
+        /* Header */
+        header {
+            background-color: rgb(92, 143, 238);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1px;
+            flex-wrap: wrap; 
+        }
+
+        .logo img {
+            height: 50px; /* Adjust logo size */
+            display: block;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap; 
+        }
+
+        .main-nav ul li {
+            position: relative;
+            margin: 0 15px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: var(--primary-color);
+            padding: 15px 0;
+            display: block;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav .has-submenu > a {
+            display: flex;
+            align-items: center;
+        }
+        .main-nav .has-submenu .fa-caret-down {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        .main-nav .submenu {
+            display: none;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            min-width: 200px;
+            list-style: none;
+            padding: 10px 0;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .main-nav .has-submenu:hover .submenu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .main-nav .submenu li a {
+            padding: 10px 20px;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+        .main-nav .submenu li a:hover {
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+        }
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white for content */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .archeological-intro {
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .archeological-intro h2 {
+            color: var(--primary-color);
+            font-size: 2.2em;
+        }
+
+        .archeological-intro p {
+            font-size: 1.1em;
+            color: var(--dark-gray);
+            margin-bottom: 5px;
+        }
+
+        .archeological-site {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #388e3c;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .archeological-site h2 {
+            margin-top: 0;
+            color: #2e7d32;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .archeological-site p {
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+
+        .site-details {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .detail-item {
+            flex: 1 1 150px;
+            padding: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .detail-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 100px;
+            margin-top: 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-left {
+            flex: 1;
+            text-align: left;
+            margin-right: 20px;
+            min-width: 250px;
+            margin-bottom: 20px; /* For responsiveness */
+        }
+
+        .footer-left p {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .footer-right {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            position: relative;
+            min-width: 300px;
+        }
+
+        .curly-brace {
+            display: none; 
+        }
+
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .contact-info li {
+            margin-bottom: 10px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--secondary-color);
+        }
+
+        .contact-info i {
+            margin-right: 8px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 350px;
+            margin-top: 20px;
+        }
+
+        .contact-form p {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            resize: vertical;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .main-nav ul li {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .main-nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .main-nav ul li a {
+                padding: 12px 20px;
+            }
+
+            .main-nav .submenu {
+                position: static;
+                display: block; /* Always block for mobile, controlled by max-height */
+                box-shadow: none;
+                border-radius: 0;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                background-color: #f0f0f0; /* Lighter background for open submenus */
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            .main-nav .submenu.active-submenu {
+                max-height: fit-content; /* Dynamically adjust height */
+            }
+
+            .main-nav .has-submenu:hover .submenu {
+                display: block; /* Override hover for touch devices */
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-left, .footer-right {
+                text-align: center;
+                margin-right: 0;
+                margin-bottom: 30px;
+                width: 100%;
+            }
+
+            .social-icons {
+                margin-top: 15px;
+            }
+
+            .contact-info ul {
+                text-align: center;
+                padding-left: 0;
+            }
+
+            .contact-info li {
+                display: inline-block;
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="img/loghua.png" alt="Logo de Huallanca">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#">INICIO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="index.html">Página Principal</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="Historia y Cultura.html">HISTORIA Y CULTURA</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">TURISMO <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="circuitos arqueologicos.html">Circuitos Arqueológicos</a></li>
+                            <li><a href="circuitos urbanos.html">Circuitos Urbanos</a></li>
+                            <li><a href="hospedaje.html">Hospedajes</a></li>
+                            <li><a href="gastronimia.html">Gastronomía</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#">FESTIVIDADES <i class="fas fa-caret-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="fiestas patronales.html">Fiestas Patronales</a></li>
+                            <li><a href="eventos culturales.html">Eventos Culturales</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="servicios.html">SERVICIOS <i class="fas fa-caret-down"></i></a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="contactos.html">CONTACTO</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="archeological-intro">
+            <h2>Explorando los Circuitos Arqueológicos de Huallanca</h2>
+            <p>Sumérgete en el pasado ancestral de Huallanca, provincia de Bolognesi, Áncash, a través de sus fascinantes circuitos arqueológicos. Descubre los vestigios de culturas preíncas e incaicas que dejaron su huella en este hermoso rincón de los Andes peruanos. Cada sitio cuenta una historia milenaria, esperando ser descubierta por ti.</p>
+        </section>
+
+        <section class="archeological-site">
+            <h2>Zona Arqueológica de Sagrapetaca</h2>
+            <div class="gallery">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqX5bb6_7AsvfRPLDglQnXm8t1OPCN6hVfW9NUkzbVDWdFhTrMVXBEUaECksSfIeVHBiGYSmhoQscBrpTjZEHVJECk1Pp_e5WgzQFsH_h7tafukfP3OsEIhcm7rD3pq-Fhm1WSxAircPr4/s1600/DSCF1344.jpg" alt="Zona Arqueológica de Sagrapetaca Vista 1">
+            </div>
+            <p>Ubicada estratégicamente en las alturas de Huallanca, Sagrapetaca es un importante testimonio del pasado prehispánico. Este sitio conserva restos de antiguas construcciones de piedra, terrazas agrícolas y lo que parecen ser caminos ancestrales. Su ubicación ofrece además impresionantes vistas panorámicas del paisaje circundante, lo que sugiere que pudo haber tenido una función tanto agrícola como defensiva o de vigilancia.</p>
+            <div class="site-details">
+                <div class="detail-item">
+                    <strong>Tipo:</strong> Asentamiento Prehispánico
+                </div>
+                <div class="detail-item">
+                    <strong>Cultura:</strong> Posiblemente preínca e inca
+                </div>
+                <div class="detail-item">
+                    <strong>Características:</strong> Muros de piedra, terrazas, caminos antiguos
+                </div>
+                <div class="detail-item">
+                    <strong>Estado:</strong> Requiere exploración e investigación adicional
+                </div>
+            </div>
+            <p>Explorar Sagrapetaca te permite imaginar la vida de las antiguas civilizaciones que habitaron esta región y apreciar su adaptación al desafiante entorno andino. Se recomienda visitarla con guías locales que puedan ofrecer información sobre la historia y el significado del sitio.</p>
+        </section>
+
+        <section class="archeological-site">
+            <h2>Cañón de Huagtahuaru y sus alrededores</h2>
+            <div class="gallery">
+            <img src="https://consultasenlinea.mincetur.gob.pe/fichaInventario/foto.aspx?cod=454129" alt="Posible sitio arqueológico cerca del Cañón de Huagtahuaru">
+              <img src="https://scontent.flim2-5.fna.fbcdn.net/v/t1.6435-9/125386877_205633781080986_836549270397391697_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=V3CSTw6eVSUQ7kNvwHY5VXy&_nc_oc=AdmNYfL6R6Ev9m9qLeJBssKaKuZflmNG14CDjar3iEl4f6ivuGVp_WbRf2-AnsYCmLk&_nc_zt=23&_nc_ht=scontent.flim2-5.fna&_nc_gid=R38H27nJCa_UOpQsK7972A&oh=00_AfMLLJK_pYZp0rWzVZZRezMV2mAqb2p-C-QUnP7_R7p5hg&oe=688B0556" alt="Posible sitio arqueológico cerca del Cañón de Huagtahuaru">
+            </div>
+            <p>Si bien el Cañón de Huagtahuaru es conocido principalmente por su belleza natural y formaciones rocosas, las áreas circundantes podrían albergar vestigios arqueológicos aún no completamente documentados. Exploraciones en las cercanías del cañón podrían revelar antiguas cuevas utilizadas como refugio o sitios con grabados rupestres, ofreciendo pistas sobre los primeros habitantes de la zona.</p>
+            <div class="site-details">
+                <div class="detail-item">
+                    <strong>Tipo:</strong> Potencial sitio con vestigios
+                </div>
+                <div class="detail-item">
+                    <strong>Ubicación:</strong> Cercanías del Cañón de Huagtahuaru
+                </div>
+                <div class="detail-item">
+                    <strong>Posibles Hallazgos:</strong> Cuevas, grabados rupestres, herramientas líticas
+                </div>
+                <div class="detail-item">
+                    <strong>Estado:</strong> Poco explorado, potencial para descubrimientos
+                </div>
+            </div>
+            <p>Para los aventureros y entusiastas de la arqueología, la exploración de las áreas adyacentes al Cañón de Huagtahuaru representa una oportunidad emocionante para contribuir al conocimiento del pasado de Huallanca. Se recomienda realizar estas exploraciones con precaución y, de encontrar algún vestigio, reportarlo a las autoridades locales.</p>
+        </section>
+
+        <section class="archeological-site">
+            <h2>Otros Sitios de Interés Arqueológico (Fomento a la Investigación)</h2>
+            <p>Además de los sitios mencionados, la vasta y rica geografía de Huallanca, Bolognesi, Áncash, sugiere la posible existencia de numerosos otros vestigios arqueológicos. Los relatos orales de la comunidad, las formaciones geográficas inusuales y los hallazgos fortuitos de cerámicas o herramientas líticas por parte de los agricultores y ganaderos locales, son indicadores de un pasado prehispánico aún por descubrir y estudiar a fondo.</p>
+            <p>Estos posibles sitios podrían incluir:</p>
+            <ul>
+                <li>**Entierros y Chullpas:** Estructuras funerarias antiguas, a menudo construidas en lugares elevados y de difícil acceso.</li>
+                <li>**Andenes y Terrazas Agrícolas:** Sistemas de cultivo precolombinos que demuestran avanzadas técnicas de ingeniería agrícola para adaptar el terreno a la producción.</li>
+                <li>**Centros Ceremoniales Menores:** Pequeñas plazas o plataformas utilizadas para rituales o reuniones comunitarias.</li>
+                <li>**Pinturas Rupestres o Petroglifos:** Manifestaciones artísticas en roca que ofrecen una ventana a las creencias y vida cotidiana de las antiguas culturas.</li>
+            </ul>
+            <p>La Municipalidad de Huallanca, junto con instituciones culturales y universidades, podría promover proyectos de investigación arqueológica para catalogar y preservar estos valiosos tesoros. Se invita a los visitantes y a la comunidad local a respetar cualquier sitio arqueológico y a reportar hallazgos a las autoridades pertinentes para su debida protección y estudio.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>MUNICIPALIDAD DE HUALLANCA</p>
+            </div>
+            <div class="footer-right">
+                <span class="curly-brace"></span>
+                <div class="contact-info">
+                    <p>Información de contacto:</p>
+                    <ul>
+                        <li><a href="tel:+51987654321"><i class="fas fa-phone"></i> +51 987 654 321</a></li>
+                        <li><a href="mailto:info@huallancaturismo.gob.pe"><i class="fas fa-envelope"></i> info@huallancaturismo.gob.pe</a></li>
+                    </ul>
+                    <p>Síguenos en redes sociales:</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <form class="contact-form">
+                        <p>Envíanos un mensaje:</p>
+                        <input type="text" placeholder="Tu Nombre">
+                        <input type="email" placeholder="Tu Correo">
+                        <textarea placeholder="Tu Mensaje"></textarea>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="credits">© 2025 Municipalidad de Huallanca | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // JavaScript para el menú móvil (abre/cierra el submenú al hacer clic)
+        document.addEventListener('DOMContentLoaded', () => {
+            const hasSubmenuLinks = document.querySelectorAll('.main-nav .has-submenu > a');
+
+            hasSubmenuLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    // Only apply dropdown logic if on small screens or if it's a submenu link
+                    if (window.innerWidth <= 768 || link.parentElement.querySelector('.submenu')) {
+                        event.preventDefault(); // Prevent default link behavior for submenu toggling
+
+                        const parentLi = event.target.closest('.has-submenu');
+                        const submenu = parentLi.querySelector('.submenu');
+
+                        if (submenu) {
+                            // Close other open submenus
+                            document.querySelectorAll('.main-nav .submenu').forEach(sub => {
+                                if (sub !== submenu && sub.classList.contains('active-submenu')) {
+                                    sub.classList.remove('active-submenu');
+                                    sub.style.maxHeight = null;
+                                    const otherCaretIcon = sub.parentElement.querySelector('.fa-caret-down');
+                                    if (otherCaretIcon) otherCaretIcon.style.transform = 'rotate(0deg)';
+                                }
+                            });
+
+                            // Toggle current submenu
+                            submenu.classList.toggle('active-submenu');
+                            const caretIcon = parentLi.querySelector('.fa-caret-down');
+
+                            if (submenu.classList.contains('active-submenu')) {
+                                submenu.style.maxHeight = submenu.scrollHeight + "px"; // Expand to full height
+                                if (caretIcon) caretIcon.style.transform = 'rotate(180deg)';
+                            } else {
+                                submenu.style.maxHeight = null; // Collapse
+                                if (caretIcon) caretIcon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
